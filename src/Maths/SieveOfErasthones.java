@@ -9,6 +9,7 @@ public class SieveOfErasthones {
         int num = sc.nextInt();
 
         printPrimeLessThan(num);
+        sc.close();
 
     }
 

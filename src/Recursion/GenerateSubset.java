@@ -11,6 +11,7 @@ public class GenerateSubset {
         ArrayList<String> arl = new ArrayList<>();
         generateSubsets(str,arl);
         System.out.println(arl);
+        sc.close();
     }
 
     public static void generateSubsets(String str,ArrayList<String> arl){

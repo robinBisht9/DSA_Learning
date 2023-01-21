@@ -15,6 +15,7 @@ public class GCDofTwo {
 
 
         System.out.printf("GCD of %d and %d is : %d\n", first,second,gcd );
+        sc.close();
 
     }
 
