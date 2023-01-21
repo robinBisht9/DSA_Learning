@@ -7,6 +7,7 @@ public class CheckForPrime {
         Scanner sc = new Scanner(System.in);
         int num = sc.nextInt();
         System.out.println(isPrime(num));
+        sc.close();
     }
 
     public static boolean isPrime(int num){

@@ -8,6 +8,7 @@ public class PrimeFactors {
         int num = sc.nextInt();
 
         printPrimeFactors(num);
+        sc.close();
     }
 
     public static void printPrimeFactors(int n){
