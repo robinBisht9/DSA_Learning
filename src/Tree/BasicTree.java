@@ -13,10 +13,12 @@ public class BasicTree {
         root.right.left = new TreeNode(98);
         root.left.left = new TreeNode(28);
         
-        binaryTreeToDLL(root);
-
-        displayLL(root);
+    }
+    public static TreeNode findLeftMost(TreeNode root){
+        if( root == null ) return null;
+        if( root.left == null ) return root;
         
+        return findLeftMost(root.left);
     }
 
     public static void PreorderTraversal(TreeNode root){
@@ -103,24 +105,5 @@ public class BasicTree {
         int absDifference = Math.abs(right-left);
 
         return absDifference > 1 ? -1 : Math.max(left,right)+1;
-    }
-
-    public static TreeNode binaryTreeToDLL(TreeNode root){
-        if( root == null ) return null;
-
-        TreeNode head = binaryTreeToDLL(root.left);
-        root.prev = head;
-        root.next = binaryTreeToDLL(root.right);
-
-        return head;
-    }
-    public static void displayDLL(TreeNode root){
-        TreeNode temp = root;
-        if( temp == null ) return;
-        while( temp.next != null ){
-            System.out.printf("%d -> ",temp.data);
-            temp = temp.next;
-        }
-        System.out.printf("%d\n",temp.data);
     }
 }
