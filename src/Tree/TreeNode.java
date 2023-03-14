@@ -1,11 +1,9 @@
 package Tree;
 
 public class TreeNode {
-    int data;
-    TreeNode left;
-    TreeNode right;
-    TreeNode next;
-    TreeNode prev;
+    public int data;
+    public TreeNode left;
+    public TreeNode right;
 
     public TreeNode(){
          this.left = null;

@@ -12,6 +12,8 @@ public class BasicTree {
         root.right.right = new TreeNode(71);
         root.right.left = new TreeNode(98);
         root.left.left = new TreeNode(28);
+        root.left.right = new TreeNode(99);
+        
         
     }
     public static TreeNode findLeftMost(TreeNode root){
