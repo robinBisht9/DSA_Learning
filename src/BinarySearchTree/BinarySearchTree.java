@@ -14,9 +14,7 @@ public class BinarySearchTree {
         root = insertInBST(root, 14);
         root = deleteKeyInBST(root, 10);
 
-        BasicTree.levelOrderTraversal(root);
-
-        System.out.println(searchInBST(root, 14));
+        solution();
     }
 
     public static boolean searchInBST(TreeNode root,int data){
@@ -81,5 +79,22 @@ public class BinarySearchTree {
             curr = curr.left;
         }
         return curr;
+    }
+    public static void sortedArrayToBST(int[] nums){
+        TreeNode root = toBST(nums, 0, nums.length-1);
+        BasicTree.levelOrderTraversal(root);
+    }
+    public static TreeNode toBST(int[] nums, int l, int r){
+        if( l > r ){
+            return null;
+        }
+        if( l == r ){
+            return new TreeNode(nums[l]);
+        }
+        int mid = (l+r)/2;
+        TreeNode root = new TreeNode(nums[mid]);
+        root.left = toBST(nums,l,mid-1);
+        root.right = toBST(nums,mid+1,r);
+        return root;
     }
 }
