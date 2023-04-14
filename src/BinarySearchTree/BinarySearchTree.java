@@ -1,20 +1,49 @@
 package BinarySearchTree;
+import java.util.HashMap;
+import java.util.PriorityQueue;
+import java.util.Stack;
+import java.util.TreeMap;
+
 import Tree.*;
 
 public class BinarySearchTree {
+    static TreeNode prev,first,second;
     public static void main(String[] args) {
-        TreeNode root = new TreeNode(20);
-        root.left = new TreeNode(10);
-        root.left.left = new TreeNode(5);
-        root.left.right = new TreeNode(15);
-        root.right = new TreeNode(28);
-        root.right.right = new TreeNode(30);
-        root.right.left = new TreeNode(25);
+        TreeNode root = new TreeNode(10);
+        root.right = new TreeNode(25);
+        root.left = new TreeNode(15);
+        root.left.left = new TreeNode(35);
+        root.left.left.left = new TreeNode(40);
+        root.left.right = new TreeNode(20);
+        root.left.right.right = new TreeNode(75);
+        root.left.right.right.right = new TreeNode(80);
 
-        root = insertInBST(root, 14);
-        root = deleteKeyInBST(root, 10);
+        verticalSum(root);
+    }
+    public static void verticalSum(TreeNode root){
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int horiz = 0;
+        verticalSumInternal(root,horiz,map);
+        int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+        for( int key : map.keySet() ){
+            if( key < min ){
+                min = key;
+            }
+            if( key > max ){
+                max = key;
+            }
+        }
+        for( int i = min;i<=max;i++ ){
+            System.out.printf("%d ", map.get(i));
+        }
+    }
+    public static void verticalSumInternal(TreeNode root,int horiz,HashMap<Integer,Integer> map){
+        if( root == null ) return;
 
-        solution();
+        verticalSumInternal(root.left,horiz-1,map);
+        map.put(horiz, map.getOrDefault(horiz, 0) + root.data );
+        verticalSumInternal(root.right,horiz+1,map);
+
     }
 
     public static boolean searchInBST(TreeNode root,int data){
@@ -97,4 +126,31 @@ public class BinarySearchTree {
         root.right = toBST(nums,mid+1,r);
         return root;
     }
+    public static boolean isBST(TreeNode root, int min , int max){
+        return isBSTInternal(root,Integer.MIN_VALUE,Integer.MAX_VALUE);
+    }
+    public static boolean isBSTInternal(TreeNode root, int min,int max){
+        if( root == null ) return true;
+
+        return ( root.data > min && root.data < max && isBSTInternal(root.left, min, root.data) && isBSTInternal(root.right, root.data, max) );
+    }
+    public static void fixBSTTwo(TreeNode root){
+
+        fixBSTTwoIncorrect(root);
+        int data = first.data;
+        first.data = second.data;
+        second.data = data;
+    }
+    public static void fixBSTTwoIncorrect(TreeNode root){
+        if( root == null ) return;
+
+        fixBSTTwoIncorrect(root.left);
+        if( prev != null && root.data < prev.data ){
+            if( first == null ) first = prev;
+            second = root;
+        }
+        prev = root;
+        fixBSTTwoIncorrect(root.right);
+    }
+
 }

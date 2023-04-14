@@ -22,18 +22,18 @@ public class BasicTree {
         
         return findLeftMost(root.left);
     }
-
-    public static void PreorderTraversal(TreeNode root){
-        if( root == null ) return;
-        PreorderTraversal(root.left);
-        System.out.print(root.data+" ");
-        PreorderTraversal(root.right);
-    }
+    
     public static void InorderTraversal(TreeNode root){
         if( root == null ) return;
-        System.out.print(root.data+" ");
         InorderTraversal(root.left);
+        System.out.print(root.data+" ");
         InorderTraversal(root.right);
+    }
+    public static void PreorderTraversal(TreeNode root){
+        if( root == null ) return;
+        System.out.print(root.data+" ");
+        PreorderTraversal(root.left);
+        PreorderTraversal(root.right);
     }
     public static void PostorderTraversal(TreeNode root){
         if( root == null ) return;
