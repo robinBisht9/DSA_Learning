@@ -25,6 +25,9 @@ public class GraphList {
         adj.get(u).add(v);
         adj.get(v).add(u);
     }
+    public static void addEdgeDirected(ArrayList<ArrayList<Integer>> adj, int u,int v){
+        adj.get(u).add(v);
+    }
     public static void printGraph(ArrayList<ArrayList<Integer>> adj){
         for(int i = 0;i< adj.size();i++){
             System.out.println(i+"->"+adj.get(i));

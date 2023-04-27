@@ -5,24 +5,20 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.Stack;
 
 public class DAG {
     public static void main(String[] args) {
-        Graph g = new Graph(9);
-        g.addEdgeUndirected(0, 1, 4);
-        g.addEdgeUndirected(0, 2, 8);
-        g.addEdgeUndirected(1, 2, 11);
-        g.addEdgeUndirected(1, 3, 8);
-        g.addEdgeUndirected(2, 4, 7);
-        g.addEdgeUndirected(2,5, 1);
-        g.addEdgeUndirected(3, 4, 2);
-        g.addEdgeUndirected(4, 5, 6);
-        g.addEdgeUndirected(3, 6, 7);
-        g.addEdgeUndirected(3, 7, 4);
-        g.addEdgeUndirected(5, 7, 2);
-        g.addEdgeUndirected(6, 8, 8);
-        g.addEdgeUndirected(7, 8, 10);
-        g.DjikstraAlgorithm(0);
+        Graph g = new Graph(6);
+        g.addEdgeDirected( 0, 1,1);
+        g.addEdgeDirected( 1, 2,1);
+        g.addEdgeDirected( 2, 1,1);
+        g.addEdgeDirected( 1, 3,1);
+        g.addEdgeDirected( 3, 4,1);
+        g.addEdgeDirected( 4, 5,1);
+        g.addEdgeDirected( 5, 4,1);
+
+        g.KosarajuAlgorithm();
         
     }
     static class Graph{
@@ -44,6 +40,52 @@ public class DAG {
             WeightedNodes wtdNodeU = new WeightedNodes(u, weight);
             adj.get(u).add(wtdNodeV);
             adj.get(v).add(wtdNodeU);
+        }
+        void KosarajuAlgorithm(){
+            Stack<Integer> st = new Stack<>();
+            boolean[] visited = new boolean[adj.size()];
+            for(int i=0;i<adj.size();i++){
+                if( visited[i] == false ){
+                    fillOrder(i,visited,st);
+                }
+            }
+            Graph gr = getTranspose(adj);
+
+            visited = new boolean[adj.size()];
+
+            while( !st.isEmpty() ){
+                int nd = st.pop();
+                if( visited[nd] == false ){
+                    gr.DFSUtil(nd, visited);
+                    System.out.println();
+                }
+            }
+        }
+        Graph getTranspose(ArrayList<ArrayList<WeightedNodes>> adjNew){
+            Graph gr = new Graph(this.totalNode);
+            for(int i=0;i<totalNode;i++){
+                for( WeightedNodes wt : adjNew.get(i) ){
+                    gr.addEdgeDirected(wt.getV(), i, 1);
+                }
+            }
+            return gr;
+        }
+        void DFSUtil(int v , boolean[] visited){
+            visited[v] = true;
+            System.out.print(v+" ");
+            for( WeightedNodes wt : adj.get(v) ){
+                if( visited[wt.getV()] == false ) DFSUtil(wt.getV(), visited);
+            }
+        }
+        void fillOrder(int i,boolean[] visited,Stack<Integer> st){
+            visited[i] = true;
+    
+            for( WeightedNodes wt : adj.get(i) ){
+                if( !visited[wt.getV()] ){
+                    fillOrder(wt.getV(), visited, st);
+                }
+            }
+            st.push(i);
         }
         void DjikstraAlgorithm(int s){
             PriorityQueue<int[]> pq = new PriorityQueue<>( (a,b) -> a[1] - b[1] );
