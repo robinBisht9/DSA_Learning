@@ -9,16 +9,14 @@ import java.util.Stack;
 
 public class DAG {
     public static void main(String[] args) {
-        Graph g = new Graph(6);
-        g.addEdgeDirected( 0, 1,1);
-        g.addEdgeDirected( 1, 2,1);
-        g.addEdgeDirected( 2, 1,1);
-        g.addEdgeDirected( 1, 3,1);
-        g.addEdgeDirected( 3, 4,1);
-        g.addEdgeDirected( 4, 5,1);
-        g.addEdgeDirected( 5, 4,1);
+        Graph g = new Graph(4);
+        g.addEdgeDirected(0, 1, 1);
+        g.addEdgeDirected(0, 2, 4);
+        g.addEdgeDirected(1, 2, -3);
+        g.addEdgeDirected(1, 3, 2);
+        g.addEdgeDirected(2, 3, 3);
 
-        g.KosarajuAlgorithm();
+        g.bellmanFordAlgorithm(0);
         
     }
     static class Graph{
@@ -114,6 +112,23 @@ public class DAG {
             }
             System.out.println(Arrays.toString(distance));
 
+        }
+        void bellmanFordAlgorithm(int s){
+            int[] distance = new int[adj.size()];
+            Arrays.fill(distance, Integer.MAX_VALUE);
+            distance[s] = 0;
+
+            for( int i=0;i<totalNode-1;i++ ){
+
+                for( int u = 0;u<adj.size();u++){
+                    for( WeightedNodes node : adj.get(u) ){
+                        if( distance[node.getV()] > distance[u] + node.getWeight() ){
+                            distance[node.getV()]  = distance[u] + node.getWeight();
+                        }
+                    }
+                }
+            }
+            System.out.println(Arrays.toString(distance));
         }
         static ArrayList<Integer> TopologicalSortingBFS(){
             ArrayList<Integer> arl = new ArrayList<>();
